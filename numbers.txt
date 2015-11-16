@@ -1,0 +1,102 @@
+0909090	0x90909090
+(gdb) quti
+Undefined command: "quti".  Try "help".
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [process 3374] will be killed.
+
+Quit anyway? (y or n) y
+[11/13/2015 15:50] seed@ubuntu:~/Desktop/CW1/Seed 2$ gdb rstack
+GNU gdb (Ubuntu/Linaro 7.4-2012.04-0ubuntu2.1) 7.4-2012.04
+Copyright (C) 2012 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i686-linux-gnu".
+For bug reporting instructions, please see:
+<http://bugs.launchpad.net/gdb-linaro/>...
+Reading symbols from /home/seed/Desktop/CW1/Seed 2/rstack...done.
+(gdb) break 14
+Breakpoint 1 at 0x804848a: file stack.c, line 14.
+(gdb) run
+Starting program: /home/seed/Desktop/CW1/Seed 2/rstack 
+
+Breakpoint 1, bof (
+    str=0xbffff147 "\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220\220"...)
+    at stack.c:14
+14	    strcpy(buffer, str);
+(gdb) info registers
+eax            0xbffff147	-1073745593
+ecx            0x804b0a0	134525088
+edx            0x205	517
+ebx            0xb7fc4ff4	-1208201228
+esp            0xbffff0f0	0xbffff0f0
+ebp            0xbffff128	0xbffff128
+esi            0x0	0
+edi            0x0	0
+eip            0x804848a	0x804848a <bof+6>
+eflags         0x286	[ PF SF IF ]
+cs             0x73	115
+ss             0x7b	123
+ds             0x7b	123
+es             0x7b	123
+fs             0x0	0
+gs             0x33	51
+(gdb) x/40x $esp
+0xbffff0f0:	0x0804b008	0xbffff147	0x00000205	0xb7e34374
+0xbffff100:	0xb7fc4ff4	0xb7fc4ff4	0x00000000	0xb7e1f900
+0xbffff110:	0xbffff358	0xb7ff26b0	0x0804b008	0xb7fc4ff4
+0xbffff120:	0x00000000	0x00000000	0xbffff358	0x080484ff
+0xbffff130:	0xbffff147	0x00000001	0x00000205	0x0804b008
+0xbffff140:	0x00000000	0x90e1f900	0x90909090	0x90909090
+0xbffff150:	0x90909090	0x90909090	0x90909090	0x90909090
+0xbffff160:	0x90909090	0x90909090	0x90909090	0x90909090
+0xbffff170:	0x90909090	0x90909090	0x90909090	0x90909090
+0xbffff180:	0x90909090	0x90909090	0x90909090	0x90909090
+(gdb) disassemble /mr main
+Dump of assembler code for function main:
+20	{
+   0x080484a3 <+0>:	55	push   %ebp
+   0x080484a4 <+1>:	89 e5	mov    %esp,%ebp
+   0x080484a6 <+3>:	83 e4 f0	and    $0xfffffff0,%esp
+   0x080484a9 <+6>:	81 ec 20 02 00 00	sub    $0x220,%esp
+
+21	    char str[517];
+22	    FILE *badfile;
+23	
+24	    badfile = fopen("badfile", "r");
+   0x080484af <+12>:	ba f0 85 04 08	mov    $0x80485f0,%edx
+   0x080484b4 <+17>:	b8 f2 85 04 08	mov    $0x80485f2,%eax
+   0x080484b9 <+22>:	89 54 24 04	mov    %edx,0x4(%esp)
+   0x080484bd <+26>:	89 04 24	mov    %eax,(%esp)
+   0x080484c0 <+29>:	e8 fb fe ff ff	call   0x80483c0 <fopen@plt>
+   0x080484c5 <+34>:	89 84 24 1c 02 00 00	mov    %eax,0x21c(%esp)
+
+25	    fread(str, sizeof(char), 517, badfile);
+   0x080484cc <+41>:	8d 44 24 17	lea    0x17(%esp),%eax
+   0x080484d0 <+45>:	8b 94 24 1c 02 00 00	mov    0x21c(%esp),%edx
+   0x080484d7 <+52>:	89 54 24 0c	mov    %edx,0xc(%esp)
+   0x080484db <+56>:	c7 44 24 08 05 02 00 00	movl   $0x205,0x8(%esp)
+---Type <return> to continue, or q <return> to quit---
+   0x080484e3 <+64>:	c7 44 24 04 01 00 00 00	movl   $0x1,0x4(%esp)
+   0x080484eb <+72>:	89 04 24	mov    %eax,(%esp)
+   0x080484ee <+75>:	e8 7d fe ff ff	call   0x8048370 <fread@plt>
+
+26	    bof(str);
+   0x080484f3 <+80>:	8d 44 24 17	lea    0x17(%esp),%eax
+   0x080484f7 <+84>:	89 04 24	mov    %eax,(%esp)
+   0x080484fa <+87>:	e8 85 ff ff ff	call   0x8048484 <bof>
+
+27	
+28	    printf("Returned Properly\n");
+   0x080484ff <+92>:	c7 04 24 fa 85 04 08	movl   $0x80485fa,(%esp)
+   0x08048506 <+99>:	e8 85 fe ff ff	call   0x8048390 <puts@plt>
+
+29	    return 1;
+   0x0804850b <+104>:	b8 01 00 00 00	mov    $0x1,%eax
+
+30	}
+   0x08048510 <+109>:	c9	leave  
+   0x08048511 <+110>:	c3	ret    
