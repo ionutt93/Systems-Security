@@ -12,6 +12,7 @@ int bof(char *str)
 
     /* The following statement has a buffer overflow problem */ 
     strcpy(buffer, str);
+    printf("%08x\n", &buffer);
 
     return 1;
 }

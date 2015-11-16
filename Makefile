@@ -1,5 +1,8 @@
-mem_rand:
+mem_rand_off:
 	sysctl -w kernel.randomize_va_space=0
+
+mem_rand_on:
+	/sbin/sysctl -w kernel.randomize_va_space=2
 
 run_exploit:
 	gcc -o exploit exploit.c
