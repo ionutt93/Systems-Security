@@ -10,9 +10,9 @@ int bof(char *str)
 {
     char buffer[24];
 
+    // printf("%x\n", (&buffer + 36));
     /* The following statement has a buffer overflow problem */ 
     strcpy(buffer, str);
-    printf("%08x\n", &buffer);
 
     return 1;
 }
